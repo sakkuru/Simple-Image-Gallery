@@ -11,7 +11,20 @@ document.getElementById("upload-form").addEventListener("submit", function (e) {
     const file = document.getElementById("file").files[0]
     if (!file) return alert("ファイルを選んでください")
 
-    const blobUrl = `${containerUrl}/${encodeURIComponent(file.name)}?${sasToken}`
+    // 日時を取得し、フォーマットする
+    const now = new Date()
+    const yyyy = now.getFullYear()
+    const MM = String(now.getMonth() + 1).padStart(2, "0")
+    const dd = String(now.getDate()).padStart(2, "0")
+    const HH = String(now.getHours()).padStart(2, "0")
+    const mm = String(now.getMinutes()).padStart(2, "0")
+    const ss = String(now.getSeconds()).padStart(2, "0")
+    const timestamp = `${yyyy}${MM}${dd}_${HH}${mm}${ss}`
+
+    // ファイル名に日時を追加
+    const newFileName = `${timestamp}_${file.name}`
+    const blobUrl = `${containerUrl}/${encodeURIComponent(newFileName)}?${sasToken}`
+
     fetch(blobUrl, {
         method: "PUT",
         headers: {
@@ -21,7 +34,6 @@ document.getElementById("upload-form").addEventListener("submit", function (e) {
         body: file
     }).then(response => {
         if (response.ok) {
-            // alert("アップロード成功")
             loadImages()
         } else {
             alert("アップロード失敗")
@@ -36,7 +48,14 @@ function loadImages() {
         .then(xmlText => {
             const parser = new DOMParser()
             const xml = parser.parseFromString(xmlText, "application/xml")
-            const blobs = xml.getElementsByTagName("Blob")
+            const blobs = Array.from(xml.getElementsByTagName("Blob")) // NodeList → 配列
+
+            // 名前を降順（新しいものが先）でソート
+            blobs.sort((a, b) => {
+                const nameA = a.getElementsByTagName("Name")[0].textContent
+                const nameB = b.getElementsByTagName("Name")[0].textContent
+                return nameB.localeCompare(nameA)
+            })
 
             const grid = document.getElementById("image-grid")
             grid.innerHTML = ""
@@ -65,6 +84,7 @@ function loadImages() {
             }
         })
 }
+
 
 document.addEventListener("DOMContentLoaded", function () {
     loadImages()
