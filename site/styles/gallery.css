@@ -1,0 +1,41 @@
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 常に4列 */
+  gap: 12px;
+  width: 100%;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.image-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #f9f9f9;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.image-card img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.2s ease;
+}
+
+.image-card img:hover {
+  transform: scale(1.03);
+}
+
+.form-check {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 4px;
+  padding: 2px 4px;
+}

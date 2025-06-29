@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Image Gallery</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="styles/gallery.css" rel="stylesheet">
+</head>
+<body class="mt-4">
+
+  <!-- アップロードUIのみ Bootstrap コンテナに -->
+  <div class="container-fluid">
+    <h1 class="mb-4">Image Gallery</h1>
+
+    <form id="upload-form" class="mb-4 d-flex align-items-center">
+      <label for="file" class="btn btn-outline-primary mb-0 mr-2">Choose File</label>
+      <input type="file" id="file" class="d-none">
+      <span id="file-name" class="ml-2 mr-3">No file chosen</span>
+      <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+  </div>
+
+  <!-- グリッドは container の外で画面幅いっぱいに -->
+  <div class="image-grid" id="image-grid">
+    <!-- JSで画像を挿入 -->
+  </div>
+
+  <!-- モーダル -->
+  <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <img src="" id="modalImage" alt="Expanded image" class="img-fluid">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JSライブラリ -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="scripts/gallery.js"></script>
+</body>
+</html>
